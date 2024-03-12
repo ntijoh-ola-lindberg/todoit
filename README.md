@@ -13,3 +13,7 @@ bundle install
 ``` 
 rake run
 ``` 
+
+## Databas
+
+ Använd [DB Browser for SQLite](https://sqlitebrowser.org) för att läsa och ändra manuellt i databasen.
