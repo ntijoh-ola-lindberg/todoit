@@ -1,17 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>To do webbapp</title>
+    <title>todo!</title>
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>"> 
 </head>
 <body>
-    <h1>Do it!</h1>
-
-    <% @todos.each do | t | %>
-    <section class="todoitem">
-        <h2><%= t['todo_title'] %></h2>
-        <p><%= t['todo_description'] %></p>
+    <section class="new-todo">
+        <h1>Ny <span class="logo">todo!</span></h1>
+        <form action="/new-todo" method="post">
+            <label>Titel <input type="text" name="todo_title" /></label>
+            <label>Beskrivning <input type="text" name="todo_description"></label>
+            <input type="submit" value="Spara">
+        </form>
     </section>
-    <% end %>
+
+    <hr>
+
+    <h1><span class="logo">todo!</span></h1>
+    <article class="active-todos">
+        <% @todos.each do | t | %>
+        <article class="todoitem">
+            <h2><%= t['todo_title'] %></h2>
+            <p><%= t['todo_description'] %></p>
+        </article>
+        <% end %>
+    </article>
 
 </body>

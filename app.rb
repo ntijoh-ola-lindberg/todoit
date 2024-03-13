@@ -13,5 +13,15 @@ class App < Sinatra::Base
         @todos = @db.execute("SELECT * FROM todos") 
         erb :index
     end
+
+    post '/new-todo' do
+        @tt = params['todo_title'].to_s
+        @td = params['todo_description'].to_s
+
+        status = @db.execute("INSERT INTO todos (todo_title, todo_description) VALUES (?,?)",@tt, @td)
+        p status
+
+        redirect '/'
+    end
     
 end
