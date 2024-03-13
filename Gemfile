@@ -1,7 +1,7 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "rerun"
-gem "rackup"
-gem "sinatra"
-gem "sinatra-contrib"
-gem "sqlite3"
+gem 'rackup'
+gem 'rerun'
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'sqlite3'

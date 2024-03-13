@@ -1,9 +1,25 @@
 body {
     background-color: forestgreen;
-    color: white;
+    color: wheat;
     font-family: 'Comic Sans MS', cursive;
 }
 
 img {
     display: block;
+}
+
+section.todoitem {
+    background-color: wheat;
+    display: inline-block;
+    padding: 1em;
+    color: forestgreen;
+    width: 10em;
+}
+
+section.todoitem h2 {
+    margin: 0;
+}
+
+section.todoitem p {
+    margin: 0;
 }

@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Template för webbapp me</title>
+    <title>To do webbapp</title>
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>"> 
 </head>
 <body>
     <h1>Do it!</h1>
+
+    <% @todos.each do | t | %>
+    <section class="todoitem">
+        <h2><%= t['todo_title'] %></h2>
+        <p><%= t['todo_description'] %></p>
+    </section>
+    <% end %>
+
 </body>

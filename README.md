@@ -16,4 +16,9 @@ rake run
 
 ## Databas
 
+Fyll databasen med test-data
+``` 
+rake seed
+``` 
+
  Använd [DB Browser for SQLite](https://sqlitebrowser.org) för att läsa och ändra manuellt i databasen.
