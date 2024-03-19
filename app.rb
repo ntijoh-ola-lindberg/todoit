@@ -15,13 +15,20 @@ class App < Sinatra::Base
     end
 
     post '/new-todo' do
-        @tt = params['todo_title'].to_s
-        @td = params['todo_description'].to_s
-
-        status = @db.execute("INSERT INTO todos (todo_title, todo_description) VALUES (?,?)",@tt, @td)
-        p status
+        title = params['todo_title'].to_s
+        description = params['todo_description'].to_s
+        is_completed = 0
+        
+        status = @db.execute("INSERT INTO todos (todo_title, todo_description, is_completed) VALUES (?,?,?)", title, description, is_completed)
 
         redirect '/'
     end
+
+    post '/todos/:id/toggle-completion' do | id | 
+        status = @db.execute("UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?", id)
+        redirect '/'
+    end
+
+    
     
 end

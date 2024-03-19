@@ -13,7 +13,7 @@ img {
     font-style: italic;
 }
 
-article.active-todos {
+article.todos {
     display: flex;
     gap: 1em;
     flex-wrap: wrap;

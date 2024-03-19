@@ -5,29 +5,47 @@
     <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>"> 
 </head>
 <body>
-    <section class="new-todo">
-        <h1>Ny <span class="logo">todo!</span></h1>
-        <form action="/new-todo" method="post">
-            <label>Titel <input type="text" name="todo_title" /></label>
-            <label>Beskrivning <input type="text" name="todo_description"></label>
-            <input type="submit" value="Spara">
-        </form>
-    </section>
 
-    <hr>
+<section class="new-todo">
+    <h1>Ny <span class="logo">todo!</span></h1>
+    <form action="/new-todo" method="post">
+        <label>Titel <input type="text" name="todo_title" /></label>
+        <label>Beskrivning <input type="text" name="todo_description"></label>
+        <input type="submit" value="Spara">
+    </form>
+</section>
 
-    <h1><span class="logo">todo!</span></h1>
-    <article class="active-todos">
-        <% @todos.each do | t | %>
-        <article class="todoitem">
-            <h2><%= t['todo_title'] %></h2>
-            <p><%= t['todo_description'] %></p>
-            
-            <input type="checkbox">
-                
-            </label>
-        </article>
-        <% end %>
-    </article>
+<hr>
 
+<h1>Todo</h1>
+<article class="todos active-todos"> 
+<%  @todos.each do | t | 
+        if t['is_completed'] == 0 %> 
+            <article class="todoitem">
+                <h2><%= t['todo_title'] %></h2>
+                <p><%= t['todo_description'] %></p>
+                <form action="/todos/<%= t['id'] %>/toggle-completion" method="post">
+                    <input type="submit" value="Färdig">
+                </form>
+            </article>
+<%      end 
+    end %>
+</article>
+
+<h1>Färdiga</h1>
+<article class="todos done-todos">
+<%  @todos.each do | t |
+        if t['is_completed'] == 1 %> 
+            <article class="todoitem">
+                <h2><%= t['todo_title'] %></h2>
+                <p><%= t['todo_description'] %></p>
+                <form action="/todos/<%= t['id'] %>/toggle-completion" method="post">
+                    <input type="submit" value="Ofärdig">
+                </form>
+            </article>
+<% 
+        end
+    end %>
+</article>
 </body>
+</html>
