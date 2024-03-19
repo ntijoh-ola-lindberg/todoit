@@ -33,9 +33,7 @@ class App < Sinatra::Base
     end
 
     delete '/todos/:id' do | id | 
-        p id
         status = @db.execute("DELETE FROM todos WHERE id =?", id)
-        p status 
         redirect '/'
     end
     

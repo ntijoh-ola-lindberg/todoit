@@ -42,11 +42,3 @@ article.todoitem p {
     display: flex;
     gap: 0.1em;
 }
-
-
-/*
-article.todoitem input {
-    right: 0.3em;
-    bottom: 0.3em;
-    position: absolute;
-}*/
