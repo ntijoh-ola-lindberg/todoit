@@ -24,9 +24,15 @@
             <article class="todoitem">
                 <h2><%= t['todo_title'] %></h2>
                 <p><%= t['todo_description'] %></p>
-                <form action="/todos/<%= t['id'] %>/toggle-completion" method="post">
-                    <input type="submit" value="Färdig">
-                </form>
+                <section class="todo-controls">
+                    <form action="/todos/<%= t['id'] %>" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="submit" value="Ta bort">
+                    </form>
+                    <form action="/todos/<%= t['id'] %>/toggle-completion" method="post">
+                        <input type="submit" value="Färdig">
+                    </form>
+                </section>
             </article>
 <%      end 
     end %>

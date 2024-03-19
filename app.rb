@@ -1,8 +1,11 @@
 require "sinatra"
 require "sinatra/base"
 require 'sqlite3'
+require 'sinatra/reloader'
 
 class App < Sinatra::Base 
+
+    use Rack::MethodOverride
 
     before do 
         @db = SQLite3::Database.new("db/app.sqlite")
@@ -29,6 +32,11 @@ class App < Sinatra::Base
         redirect '/'
     end
 
-    
+    delete '/todos/:id' do | id | 
+        p id
+        status = @db.execute("DELETE FROM todos WHERE id =?", id)
+        p status 
+        redirect '/'
+    end
     
 end

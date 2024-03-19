@@ -19,8 +19,8 @@ private
     def self.create_tables
         db.execute("CREATE TABLE todos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            todo_title VARCHAR(255) NOT NULL UNIQUE,
-            todo_description VARCHAR(255) NOT NULL UNIQUE,
+            todo_title VARCHAR(255) NOT NULL,
+            todo_description VARCHAR(255) NOT NULL,
             is_completed INTEGER NOT NULL
             )
         ");
