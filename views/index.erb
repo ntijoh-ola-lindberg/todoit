@@ -19,43 +19,21 @@
 
 <h1>Todo</h1>
 <article class="todos active-todos"> 
-<%  @todos.each do | t | 
-        if t['is_completed'] == 0 %> 
-            <article class="todoitem">
-                <h2><%= t['todo_title'] %></h2>
-                <p><%= t['todo_description'] %></p>
-                <section class="todo-controls">
-                    <form action="/todos/<%= t['id'] %>" method="post">
-                        <input type="hidden" name="_method" value="delete">
-                        <input type="submit" value="Ta bort">
-                    </form>
-                    <form action="/todos/<%= t['id'] %>/toggle-completion" method="post">
-                        <input type="submit" value="Färdig">
-                    </form>
-                </section>
-            </article>
-<%      end 
-    end %>
+<% @todos.each do |todo| %>
+    <% if todo['is_completed'] == 0 %>
+        <%= erb :'_todo', locals: { todo: todo } %>
+    <% end %>
+<% end %>
 </article>
 
 <h1>Färdiga</h1>
 <article class="todos done-todos">
-<%  @todos.each do | t |
-        if t['is_completed'] == 1 %> 
-            <article class="todoitem">
-                <h2><%= t['todo_title'] %></h2>
-                <p><%= t['todo_description'] %></p>
-                <form action="/todos/<%= t['id'] %>" method="post">
-                        <input type="hidden" name="_method" value="delete">
-                        <input type="submit" value="Ta bort">
-                    </form>
-                    <form action="/todos/<%= t['id'] %>/toggle-completion" method="post">
-                        <input type="submit" value="Ofärdig">
-                    </form>
-            </article>
-<% 
-        end
-    end %>
+<% @todos.each do |todo| %>
+    <% if todo['is_completed'] == 1 %>
+        <%= erb :'_todo', locals: { todo: todo } %>
+    <% end %>
+<% end %>
 </article>
+
 </body>
 </html>

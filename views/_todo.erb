@@ -1,0 +1,19 @@
+<article class="todoitem">
+    <h2><%= todo['todo_title'] %></h2>
+    <p><%= todo['todo_description'] %></p>
+    <section class="todo-controls">
+        <form action="/todos/<%= todo['id'] %>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <input type="submit" value="Ta bort">
+        </form>
+        <% if todo['is_completed'] == 0 %>
+            <form action="/todos/<%= todo['id'] %>/toggle-completion" method="post">
+                <input type="submit" value="Färdig">
+            </form>
+        <% else %>
+            <form action="/todos/<%= todo['id'] %>/toggle-completion" method="post">
+                <input type="submit" value="Ofärdig">
+            </form>
+        <% end %>
+    </section>
+</article>
