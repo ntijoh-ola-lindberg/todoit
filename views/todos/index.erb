@@ -8,7 +8,7 @@
 
 <section class="new-todo">
     <h1>Ny <span class="logo">todo!</span></h1>
-    <form action="/new-todo" method="post">
+    <form action="/todos/new-todo" method="post">
         <label>Titel <input type="text" name="todo_title" /></label>
         <label>Beskrivning <input type="text" name="todo_description"></label>
         <input type="submit" value="Spara">
@@ -21,7 +21,7 @@
 <article class="todos active-todos"> 
 <% @todos.each do |todo| %>
     <% if todo['is_completed'] == 0 %>
-        <%= erb :'_todo', locals: { todo: todo } %>
+        <%= erb :'todos/_todo', locals: { todo: todo } %>
     <% end %>
 <% end %>
 </article>
@@ -30,7 +30,7 @@
 <article class="todos done-todos">
 <% @todos.each do |todo| %>
     <% if todo['is_completed'] == 1 %>
-        <%= erb :'_todo', locals: { todo: todo } %>
+        <%= erb :'todos/_todo', locals: { todo: todo } %>
     <% end %>
 <% end %>
 </article>

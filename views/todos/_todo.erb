@@ -2,8 +2,7 @@
     <h2><%= todo['todo_title'] %></h2>
     <p><%= todo['todo_description'] %></p>
     <section class="todo-controls">
-        <form action="/todos/<%= todo['id'] %>" method="post">
-            <input type="hidden" name="_method" value="delete">
+        <form action="/todos/<%= todo['id']%>/delete" method="post">
             <input type="submit" value="Ta bort">
         </form>
         <% if todo['is_completed'] == 0 %>

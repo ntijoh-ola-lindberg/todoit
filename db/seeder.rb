@@ -21,9 +21,9 @@ private
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             todo_title VARCHAR(255) NOT NULL,
             todo_description VARCHAR(255) NOT NULL,
-            is_completed INTEGER NOT NULL
+            is_completed INTEGER NOT NULL DEFAULT 0
             )
-        ");
+        ")
     end
 
     def self.populate_todos
@@ -34,7 +34,7 @@ private
 
         todos.each do |todo|
             db.execute("INSERT INTO todos (todo_title, todo_description, is_completed) VALUES (?,?,?)", 
-                todo[:todo_title], todo[:todo_description], todo[:is_completed]);
+                todo[:todo_title], todo[:todo_description], todo[:is_completed])
         end
     end
 
