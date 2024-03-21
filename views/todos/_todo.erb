@@ -1,6 +1,7 @@
 <article class="todoitem">
     <h2><%= todo['todo_title'] %></h2>
     <p><%= todo['todo_description'] %></p>
+    <p><strong><em><%= todo['category_title'] %></em></strong></p>
     <section class="todo-controls">
         <form action="/todos/<%= todo['id']%>/delete" method="post">
             <input type="submit" value="Ta bort">

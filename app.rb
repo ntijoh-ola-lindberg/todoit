@@ -6,7 +6,15 @@ class App < Sinatra::Base
     end
 
     get '/' do
-        @todos = @db.execute("SELECT * FROM todos") 
+
+        #"SELECT * FROM todos"
+        sql = 'SELECT * 
+            FROM todos
+            INNER JOIN categories
+            ON category_id = categories.id'
+
+        @todos = @db.execute(sql) 
+
         erb :'todos/index'
     end
 
