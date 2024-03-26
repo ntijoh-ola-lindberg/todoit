@@ -31,18 +31,12 @@ class App < Sinatra::Base
     end
 
     post '/todos/:id/toggle-completion' do | id | 
-
-        p "Toggle completion: #{id}"
-
         status = @db.execute("UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?", id)
 
         redirect '/'
     end
 
     post '/todos/:id/delete' do | id | 
-
-        p "Deleting: #{id}"
-
         status = @db.execute("DELETE FROM todos WHERE id =?", id)
 
         redirect '/'
