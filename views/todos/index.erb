@@ -11,6 +11,14 @@
     <form action="/todos/new-todo" method="post">
         <label>Titel <input type="text" name="todo_title" /></label>
         <label>Beskrivning <input type="text" name="todo_description"></label>
+        <label>Kategorier:  </label>
+
+        <select name="category">
+        <% @categories.each do | c | %>
+        <option value="<%=c['id']%>"> <%=c['category_title']%></option>
+            <% end %>
+        </select>
+
         <input type="submit" value="Spara">
     </form>
 </section>

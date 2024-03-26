@@ -6,14 +6,15 @@ class App < Sinatra::Base
     end
 
     get '/' do
+        sql_todos = 'SELECT todos.*, categories.category_title
+            FROM todos 
+	            INNER JOIN categories 
+		            ON category_id = categories.id'
 
-        #"SELECT * FROM todos"
-        sql = 'SELECT * 
-            FROM todos
-            INNER JOIN categories
-            ON category_id = categories.id'
+        @todos = @db.execute(sql_todos)
 
-        @todos = @db.execute(sql) 
+        sql_categories = 'SELECT * FROM categories'
+        @categories = @db.execute(sql_categories) 
 
         erb :'todos/index'
     end
@@ -22,19 +23,26 @@ class App < Sinatra::Base
         title = params['todo_title']
         description = params['todo_description']
         is_completed = 0
-
-        status = @db.execute("INSERT INTO todos (todo_title, todo_description, is_completed) VALUES (?,?,?)", title, description, is_completed)
+        category = params['category']
+        
+        status = @db.execute("INSERT INTO todos (todo_title, todo_description, is_completed, category_id) VALUES (?,?,?,?)", title, description, is_completed, category)
 
         redirect '/'
     end
 
     post '/todos/:id/toggle-completion' do | id | 
+
+        p "Toggle completion: #{id}"
+
         status = @db.execute("UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?", id)
 
         redirect '/'
     end
 
     post '/todos/:id/delete' do | id | 
+
+        p "Deleting: #{id}"
+
         status = @db.execute("DELETE FROM todos WHERE id =?", id)
 
         redirect '/'
