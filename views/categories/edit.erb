@@ -1,0 +1,9 @@
+<%= erb :'layouts/_header' %>
+
+<h1>Edit category</h1>
+<form action="/categories/<%= @category[0]['id']%>/update" method="post">
+    <label>Category <input type="text" id="<%= @category[0]['id'] %>" name="category_title" value="<%= @category[0]['category_title'] %>" /></label>
+    <input type="submit" value="Färdig">
+</form>
+
+<%= erb :'layouts/_footer' %>

@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>todo!</title>
-    <link rel="stylesheet" type="text/css" href="/style.css?<%=Time.now.to_i%>"> 
-</head>
-<body>
+<%= erb :'layouts/_header' %>
 
 <section class="new-todo">
     <h1>Ny <span class="logo">todo!</span></h1>
@@ -43,5 +37,4 @@
 <% end %>
 </article>
 
-</body>
-</html>
+<%= erb :'layouts/_footer' %>

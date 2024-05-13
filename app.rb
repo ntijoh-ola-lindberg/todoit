@@ -41,5 +41,32 @@ class App < Sinatra::Base
 
         redirect '/'
     end
+
+    get '/categories' do
+        sql_categories = 'SELECT * FROM categories'
+        @categories = @db.execute(sql_categories) 
+
+        erb :'categories/index'
+    end
+
+    get '/categories/:id' do | id |
+        sql_categories = 'SELECT * FROM categories WHERE id =?'
+        @category = @db.execute(sql_categories, id)
+        erb :'categories/edit'
+    end
+
+    post '/categories/:id/update' do | id |
+        ct = params['category_title']
+        puts "Updating id: " + id + " category: " + ct
+        
+        sql = "UPDATE categories SET category_title =? WHERE id =?"
+
+        status = @db.execute(sql, ct, id)
+
+        puts status
+
+        redirect '/'
+
+    end
     
 end

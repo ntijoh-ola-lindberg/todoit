@@ -1,0 +1,11 @@
+<%= erb :'layouts/_header' %>
+
+<h1>list categories</h1>
+
+<ul>
+<% @categories.each do | c | %>
+        <li><a href="categories/<%=c['id']%>"><%=c['category_title']%></a></li>
+<% end %>
+</ul>
+
+<%= erb :'layouts/_footer' %>
