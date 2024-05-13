@@ -1,11 +1,23 @@
 <%= erb :'layouts/_header' %>
 
-<h1>list categories</h1>
+<h1>Alla kategorier</h1>
 
-<ul>
+<ul class="categories">
 <% @categories.each do | c | %>
-        <li><a href="categories/<%=c['id']%>"><%=c['category_title']%></a></li>
+        <li>
+                <a href="/categories/<%=c['id']%>"><%=c['category_title']%></a>
+                <form action="/categories/<%= c['id']%>/delete" method="post">
+                        <input type="submit" value="Ta bort">
+                </form>
+        </li>
 <% end %>
 </ul>
+
+<h1>Ny kategori</h1>
+
+<form action="/categories/new" method="post">
+    <label>Namn på kategori <input type="text" name="category_title" /></label>
+    <input type="submit" value="Färdig">
+</form>
 
 <%= erb :'layouts/_footer' %>

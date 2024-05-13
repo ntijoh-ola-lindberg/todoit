@@ -14,7 +14,7 @@ class App < Sinatra::Base
         @todos = @db.execute(sql_todos)
 
         sql_categories = 'SELECT * FROM categories'
-        @categories = @db.execute(sql_categories) 
+        @categories = @db.execute(sql_categories)
 
         erb :'todos/index'
     end
@@ -52,21 +52,39 @@ class App < Sinatra::Base
     get '/categories/:id' do | id |
         sql_categories = 'SELECT * FROM categories WHERE id =?'
         @category = @db.execute(sql_categories, id)
+
+        sql_todos = 'SELECT todos.*, categories.category_title
+            FROM todos 
+	            INNER JOIN categories 
+		            ON category_id = categories.id
+            WHERE category_id=?'
+
+        @todos = @db.execute(sql_todos, id)
+
+        sql_categories = 'SELECT * FROM categories'
+        @categories = @db.execute(sql_categories)
+
         erb :'categories/edit'
     end
 
     post '/categories/:id/update' do | id |
         ct = params['category_title']
-        puts "Updating id: " + id + " category: " + ct
-        
         sql = "UPDATE categories SET category_title =? WHERE id =?"
-
         status = @db.execute(sql, ct, id)
-
-        puts status
-
         redirect '/'
+    end
 
+    post '/categories/:id/delete' do | id |
+        status = @db.execute("DELETE FROM categories WHERE id =?", id)
+        redirect '/categories'
+    end
+
+    post '/categories/new' do
+        ct = params['category_title']
+        sql = "INSERT INTO categories (category_title) VALUES (?)"
+        status = @db.execute(sql, ct)
+        redirect '/categories'
+    
     end
     
 end
