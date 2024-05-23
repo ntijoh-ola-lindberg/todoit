@@ -1,24 +1,24 @@
 <%= erb :'layouts/_header' %>
 
+<%= erb :'todos/_todos' %>
+
 <section class="new-todo">
     <h1>Ny <span class="logo">todo!</span></h1>
+    <article class="todos new-todo"> 
     <form action="/todos/new-todo" method="post">
         <label>Titel <input type="text" name="todo_title" /></label>
         <label>Beskrivning <input type="text" name="todo_description"></label>
-        <label>Kategorier:  </label>
-
-        <select name="category">
-        <% @categories.each do | c | %>
-        <option value="<%=c['id']%>"> <%=c['category_title']%></option>
-            <% end %>
-        </select>
+        <label>Kategorier:  
+            <select name="category">
+            <% @categories.each do | c | %>
+            <option value="<%=c['id']%>"> <%=c['category_title']%></option>
+                <% end %>
+            </select>
+        </label>
 
         <input type="submit" value="Spara">
     </form>
+    </article>
 </section>
-
-<hr>
-
-<%= erb :'todos/_todos' %>
 
 <%= erb :'layouts/_footer' %>

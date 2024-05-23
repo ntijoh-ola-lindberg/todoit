@@ -1,17 +1,19 @@
-<h1>Todo</h1>
-<article class="todos active-todos"> 
-<% @todos.each do |todo| %>
-    <% if todo['is_completed'] == 0 %>
-        <%= erb :'todos/_todo', locals: { todo: todo } %>
+<section class="todos">
+    <h1>Todo</h1>
+    <article class="todos active-todos"> 
+    <% @todos.each do |todo| %>
+        <% if todo['is_completed'] == 0 %>
+            <%= erb :'todos/_todo', locals: { todo: todo } %>
+        <% end %>
     <% end %>
-<% end %>
-</article>
+    </article>
 
-<h1>Färdiga</h1>
-<article class="todos done-todos">
-<% @todos.each do |todo| %>
-    <% if todo['is_completed'] == 1 %>
-        <%= erb :'todos/_todo', locals: { todo: todo } %>
+    <h1>Färdiga</h1>
+    <article class="todos done-todos">
+    <% @todos.each do |todo| %>
+        <% if todo['is_completed'] == 1 %>
+            <%= erb :'todos/_todo', locals: { todo: todo } %>
+        <% end %>
     <% end %>
-<% end %>
-</article>
+    </article>
+</section>
