@@ -1,13 +1,18 @@
 <%= erb :'layouts/_header' %>
+<section>
+    <h1>Ändra kategori</h1>
+    <article class="edit-category">
+        <form action="/categories/<%= @category[0]['id']%>/update" method="post">
+            <label>Kategori <input type="text" id="<%= @category[0]['id'] %>" name="category_title" value="<%= @category[0]['category_title'] %>" /></label>
+            <input type="submit" value="Färdig">
+        </form>
+    </article>
+</section>
 
-<h1>Ändra kategori</h1>
-<form action="/categories/<%= @category[0]['id']%>/update" method="post">
-    <label>Kategori <input type="text" id="<%= @category[0]['id'] %>" name="category_title" value="<%= @category[0]['category_title'] %>" /></label>
-    <input type="submit" value="Färdig">
-</form>
-
-<h1>Alla ToDos i kategorien</h1>
-
-<%= erb :'todos/_todos' %>
-
+<section class="todos">
+    <h1>Alla ToDos i kategorien</h1>
+    <article>
+        <%= erb :'todos/_todos' %>
+    </article>
+</section>
 <%= erb :'layouts/_footer' %>

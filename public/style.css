@@ -31,7 +31,8 @@ main {
 
 article.new-todo,
 article.categories,
-article.new-category {
+article.new-category,
+article.edit-category {
     background-color: lightseagreen;
     padding: 1em;
     width: 300px;
