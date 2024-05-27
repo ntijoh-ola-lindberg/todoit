@@ -13,10 +13,16 @@ class App < Sinatra::Base
 
         @todos = @db.execute(sql_todos)
 
-        sql_categories = 'SELECT * FROM categories'
-        @categories = @db.execute(sql_categories)
+        @categories = get_all_categories
 
         erb :'todos/index'
+    end
+
+    def get_all_categories
+        sql_categories = 'SELECT * FROM categories'
+        categories = @db.execute(sql_categories)
+
+        return categories
     end
 
     post '/todos/new-todo' do 
@@ -32,6 +38,44 @@ class App < Sinatra::Base
 
     post '/todos/:id/toggle-completion' do | id | 
         status = @db.execute("UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?", id)
+
+        redirect '/'
+    end
+
+    #TODO: Heter det /edit eller /update?
+    post '/todos/:id/edit' do | id |
+        sql_todos = 'SELECT todos.*, categories.category_title
+            FROM todos 
+	            INNER JOIN categories 
+		            ON category_id = categories.id
+            WHERE todos.id = ?'
+
+        @todo = @db.execute(sql_todos, id)[0]
+
+        @categories = get_all_categories
+
+        erb :'todos/update'
+    end
+
+    #TODO: Vad kallas restfull-routen för att spara? Används för att spara edits på en todo
+    post '/todos/:id/save' do | id |
+    
+        todo_id = params['todo_id']
+        todo_title = params['todo_title']
+        todo_description = params['todo_description']
+        if params.has_key?('is_completed')
+            is_completed = 1
+        else 
+            is_completed = 0
+        end
+        category_title = params['category']
+
+        sql_category_id = 'SELECT * FROM categories WHERE category_title LIKE ?'
+        category = @db.execute(sql_category_id, category_title)
+        category_id = category[0]['id']
+
+        sql_save_todo = 'UPDATE todos SET todo_title =?, todo_description =?, is_completed=?, category_id=? WHERE id=?'
+        status = @db.execute(sql_save_todo, todo_title, todo_description, is_completed, category_id, todo_id)
 
         redirect '/'
     end

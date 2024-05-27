@@ -15,5 +15,8 @@
                 <input type="submit" value="Ofärdig">
             </form>
         <% end %>
+        <form action="/todos/<%= todo['id']%>/edit" method="post">
+            <input type="submit" value="Ändra">
+        </form>
     </section>
 </article>
