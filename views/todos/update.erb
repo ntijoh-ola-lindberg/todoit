@@ -1,45 +1,34 @@
 <%= erb :'layouts/_header' %>
 
+<section>
+    <h1>Uppdatera todo</h1>
+    <form action="/todos/<%= @todo['id'] %>/save" method="post">
+        <article class="update_todo">
+            
+            <input type="hidden" name="todo_id" value="<%= @todo['id'] %>">
+            <label>Titel <input type="text" name="todo_title" value="<%= @todo['todo_title'] %>"></label>
+            <label>Beskrivning <input type="text" name="todo_description" value="<%= @todo['todo_description'] %>"></label>
+            
+            <label>Färdig: 
+                <% if @todo['is_completed'] == 1 %>
+                        <input name="is_completed" type="checkbox" checked />
+                <% else %>
+                        <input name="is_completed" type="checkbox" />
+                <% end %>
+            </label>
 
-<form action="/todos/<%= @todo['id'] %>/save" method="post">>
-    <article class="todoitem">
-        
-        <input type="hidden" name="todo_id" value="<%= @todo['id'] %>">
-        <label>Titel <input type="text" name="todo_title" value="<%= @todo['todo_title'] %>"></label>
-        <label>Beskrivning <input type="text" name="todo_description" value="<%= @todo['todo_description'] %>"></label>
-        
-        <label>Färdig: 
-            <% if @todo['is_completed'] == 1 %>
-                    <input name="is_completed" type="checkbox" checked />
-            <% else %>
-                    <input name="is_completed" type="checkbox" />
-            <% end %>
-        </label>
+            <label>Kategori  
+                <select name="category" id="categories-select">
+                <% @categories.each do | c | %>
+                    <option value="<%=c['category_title']%>" category_id="-1" <% if c['id'] == @todo['category_id'] %> selected <% end %> name="" > <%=c['category_title']%></option>
+                <% end %>
+                </select>
+            </label>
 
-        <label>Kategori  
-            <select name="category" id="categories-select">
-            <% @categories.each do | c | %>
-                <option value="<%=c['category_title']%>" category_id="-1" <% if c['id'] == @todo['category_id'] %> selected <% end %> name="" > <%=c['category_title']%></option>
-            <% end %>
-            </select>
-        </label>
+            <input type="submit" value="Uppdatera">
+        </article>
+    </form>
 
-        </section>
-
-        <input type="submit" value="Uppdatera">
-    </article>
-</form>
-
-
-<%# 
-    [{
-        "id"=>2, 
-        "todo_title"=>"Andra todon", 
-        "todo_description"=>"Beskrivning av andra todon", 
-        "is_completed"=>0, 
-        "category_id"=>2, 
-        "category_title"=>"Jobbet"
-    }]
-%>
+</section>
 
 <%= erb :'layouts/_footer' %>

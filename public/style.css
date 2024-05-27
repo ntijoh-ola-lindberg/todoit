@@ -29,15 +29,6 @@ main {
     gap: 3em;
 }
 
-article.new-todo,
-article.categories,
-article.new-category,
-article.edit-category {
-    background-color: lightseagreen;
-    padding: 1em;
-    width: 300px;
-}
-
 label {
     display: block;
     margin-bottom: 0.5em;
@@ -94,6 +85,16 @@ article.todoitem p {
 .new-todo input {
     display: block;
     width: 100%;
+}
+
+article.new-todo,
+article.categories,
+article.new-category,
+article.edit-category,
+article.update_todo {
+    background-color: lightseagreen;
+    padding: 1em;
+    width: 300px;
 }
 
 .categories form {
