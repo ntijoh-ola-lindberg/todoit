@@ -1,8 +1,19 @@
 class App < Sinatra::Base 
 
-    before do 
+    def db
+        return @db if @db
+
         @db = SQLite3::Database.new("db/app.sqlite")
         @db.results_as_hash = true
+
+        return @db
+    end
+
+    def get_all_categories
+        sql_categories = 'SELECT * FROM categories'
+        categories = db.execute(sql_categories)
+
+        return categories
     end
 
     get '/' do
@@ -11,38 +22,38 @@ class App < Sinatra::Base
 	            INNER JOIN categories 
 		            ON category_id = categories.id'
 
-        @todos = @db.execute(sql_todos)
+        @todos = db.execute(sql_todos)
 
         @categories = get_all_categories
 
         erb :'todos/index'
     end
 
-    def get_all_categories
-        sql_categories = 'SELECT * FROM categories'
-        categories = @db.execute(sql_categories)
-
-        return categories
-    end
-
+    #post '/todos/
+    #CREATE
     post '/todos/new-todo' do 
         title = params['todo_title']
         description = params['todo_description']
         is_completed = 0
         category = params['category']
         
-        status = @db.execute("INSERT INTO todos (todo_title, todo_description, is_completed, category_id) VALUES (?,?,?,?)", title, description, is_completed, category)
+        status = db.execute("INSERT INTO todos (todo_title, todo_description, is_completed, category_id) VALUES (?,?,?,?)", title, description, is_completed, category)
 
         redirect '/'
     end
 
     post '/todos/:id/toggle-completion' do | id | 
-        status = @db.execute("UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?", id)
+        status = db.execute("UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?", id)
 
         redirect '/'
     end
 
+    #get '/todos/:id'
+    #SHOW
+
     #TODO: Heter det /edit eller /update?
+    #get '/todos/:id/edit'
+    #EDIT
     post '/todos/:id/edit' do | id |
         sql_todos = 'SELECT todos.*, categories.category_title
             FROM todos 
@@ -50,7 +61,7 @@ class App < Sinatra::Base
 		            ON category_id = categories.id
             WHERE todos.id = ?'
 
-        @todo = @db.execute(sql_todos, id)[0]
+        @todo = db.execute(sql_todos, id)[0]
 
         @categories = get_all_categories
 
@@ -58,6 +69,8 @@ class App < Sinatra::Base
     end
 
     #TODO: Vad kallas restfull-routen för att spara? Används för att spara edits på en todo
+    # post '/todos/:id 
+    #UPDATE
     post '/todos/:id/save' do | id |
     
         todo_id = params['todo_id']
@@ -71,31 +84,30 @@ class App < Sinatra::Base
         category_title = params['category']
 
         sql_category_id = 'SELECT * FROM categories WHERE category_title LIKE ?'
-        category = @db.execute(sql_category_id, category_title)
-        category_id = category[0]['id']
+        category_id = db.execute(sql_category_id, category_title).first['id']
 
         sql_save_todo = 'UPDATE todos SET todo_title =?, todo_description =?, is_completed=?, category_id=? WHERE id=?'
-        status = @db.execute(sql_save_todo, todo_title, todo_description, is_completed, category_id, todo_id)
+        status = db.execute(sql_save_todo, todo_title, todo_description, is_completed, category_id, todo_id)
 
         redirect '/'
     end
 
     post '/todos/:id/delete' do | id | 
-        status = @db.execute("DELETE FROM todos WHERE id =?", id)
+        status = db.execute("DELETE FROM todos WHERE id =?", id)
 
         redirect '/'
     end
 
     get '/categories' do
         sql_categories = 'SELECT * FROM categories'
-        @categories = @db.execute(sql_categories) 
+        @categories = db.execute(sql_categories) 
 
         erb :'categories/index'
     end
 
     get '/categories/:id' do | id |
         sql_categories = 'SELECT * FROM categories WHERE id =?'
-        @category = @db.execute(sql_categories, id)
+        @category = db.execute(sql_categories, id)
 
         sql_todos = 'SELECT todos.*, categories.category_title
             FROM todos 
@@ -103,10 +115,10 @@ class App < Sinatra::Base
 		            ON category_id = categories.id
             WHERE category_id=?'
 
-        @todos = @db.execute(sql_todos, id)
+        @todos = db.execute(sql_todos, id)
 
         sql_categories = 'SELECT * FROM categories'
-        @categories = @db.execute(sql_categories)
+        @categories = db.execute(sql_categories)
 
         erb :'categories/edit'
     end
@@ -114,19 +126,19 @@ class App < Sinatra::Base
     post '/categories/:id/update' do | id |
         ct = params['category_title']
         sql = "UPDATE categories SET category_title =? WHERE id =?"
-        status = @db.execute(sql, ct, id)
+        status = db.execute(sql, ct, id)
         redirect '/'
     end
 
     post '/categories/:id/delete' do | id |
-        status = @db.execute("DELETE FROM categories WHERE id =?", id)
+        status = db.execute("DELETE FROM categories WHERE id =?", id)
         redirect '/categories'
     end
 
     post '/categories/new' do
         ct = params['category_title']
         sql = "INSERT INTO categories (category_title) VALUES (?)"
-        status = @db.execute(sql, ct)
+        status = db.execute(sql, ct)
         redirect '/categories'
     
     end
