@@ -41,6 +41,7 @@ private
     def self.populate_categories
         categories = [
             {category_title: "Privat"},
+            {category_title: "Köp"},
             {category_title: "Jobb"}
         ]
 
@@ -52,8 +53,12 @@ end
 
     def self.populate_todos
         todos = [
-            {todo_title: "Första todon", todo_description: "Beskrivning av första todon", is_completed: 1, category_id: 1 },
-            {todo_title: "Andra todon", todo_description: "Beskrivning av andra todon", is_completed: 0, category_id: 2 }
+            {todo_title: "Första todon", todo_description: "Beskrivning av första todon", is_completed: 1, category_id: 3 },
+            {todo_title: "Laga pannkakor", todo_description: "2 1/2 dl vetemjöl - 1/2 tsk salt - 6 dl mjölk - 3  ägg", is_completed: 0, category_id: 1 },
+            {todo_title: "Mjölk", todo_description: "Två liter", is_completed: 0, category_id: 2 },
+            {todo_title: "Ägg", todo_description: "Ett tjog", is_completed: 0, category_id: 2 },
+            {todo_title: "Mjöl", todo_description: "Fyra kg", is_completed: 0, category_id: 2 },
+            {todo_title: "Smör", todo_description: "Inte margarin", is_completed: 0, category_id: 2 }
         ]
 
         todos.each do |todo|
