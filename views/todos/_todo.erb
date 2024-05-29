@@ -1,4 +1,4 @@
-<article class="todoitem">
+<article class="todoitem category-id-<%= todo['category_id'] %>">
     <h2><%= todo['todo_title'] %></h2>
     <p><%= todo['todo_description'] %></p>
     <p class="edit-category-link"><a href="/categories/<%= todo['id'] %>"><em><%= todo['category_title'] %></em></a></p>

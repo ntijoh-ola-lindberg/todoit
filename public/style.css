@@ -108,3 +108,15 @@ article.update_todo {
 input {
     box-sizing: border-box;
 }
+
+article.category-id-1 {
+    background-color: burlywood;
+}
+
+article.category-id-2 {
+    background-color: paleturquoise;
+}
+
+article.category-id-3 {
+    background-color: cornflowerblue;
+}
