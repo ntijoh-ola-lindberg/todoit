@@ -48,13 +48,12 @@ class App < Sinatra::Base
         redirect '/'
     end
 
+    #Show : Restful route
     #get '/todos/:id'
-    #SHOW
+    #end
 
-    #TODO: Heter det /edit eller /update?
-    #get '/todos/:id/edit'
-    #EDIT
-    post '/todos/:id/edit' do | id |
+    #Edit : Restful route. Fetches and populates the form that is saved with Update (below).
+    get '/todos/:id/edit' do | id |
         sql_todos = 'SELECT todos.*, categories.category_title
             FROM todos 
 	            INNER JOIN categories 
@@ -68,10 +67,8 @@ class App < Sinatra::Base
         erb :'todos/update'
     end
 
-    #TODO: Vad kallas restfull-routen för att spara? Används för att spara edits på en todo
-    # post '/todos/:id 
-    #UPDATE
-    post '/todos/:id/save' do | id |
+    #Update : Restful route. Saves the form for the given ID.
+    post '/todos/:id' do | id |
     
         todo_id = params['todo_id']
         todo_title = params['todo_title']
