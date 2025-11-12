@@ -37,7 +37,7 @@ class App < Sinatra::Base
         is_completed = 0
         category = params['category']
         
-        status = db.execute("INSERT INTO todos (todo_title, todo_description, is_completed, category_id) VALUES (?,?,?,?)", title, description, is_completed, category)
+        status = db.execute("INSERT INTO todos (todo_title, todo_description, is_completed, category_id) VALUES (?,?,?,?)", [title, description, is_completed, category])
 
         redirect '/'
     end
@@ -68,7 +68,7 @@ class App < Sinatra::Base
     end
 
     #Update : Restful route. Saves the form for the given ID.
-    post '/todos/:id' do | id |
+    post '/todos/:id/update' do | id |
     
         todo_id = params['todo_id']
         todo_title = params['todo_title']
@@ -84,11 +84,11 @@ class App < Sinatra::Base
         category_id = db.execute(sql_category_id, category_title).first['id']
 
         sql_save_todo = 'UPDATE todos SET todo_title =?, todo_description =?, is_completed=?, category_id=? WHERE id=?'
-        status = db.execute(sql_save_todo, todo_title, todo_description, is_completed, category_id, todo_id)
+        status = db.execute(sql_save_todo, [todo_title, todo_description, is_completed, category_id, todo_id])
 
         redirect '/'
     end
-
+    
     post '/todos/:id/delete' do | id | 
         status = db.execute("DELETE FROM todos WHERE id =?", id)
 
@@ -123,7 +123,7 @@ class App < Sinatra::Base
     post '/categories/:id/update' do | id |
         ct = params['category_title']
         sql = "UPDATE categories SET category_title =? WHERE id =?"
-        status = db.execute(sql, ct, id)
+        status = db.execute(sql, [ct, id])
         redirect '/'
     end
 

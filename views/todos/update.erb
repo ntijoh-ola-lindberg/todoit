@@ -2,7 +2,7 @@
 
 <section>
     <h1>Uppdatera todo</h1>
-    <form action="/todos/<%= @todo['id'] %>/save" method="post">
+    <form action="/todos/<%= @todo['id'] %>/update" method="post">
         <article class="update_todo">
             
             <input type="hidden" name="todo_id" value="<%= @todo['id'] %>">

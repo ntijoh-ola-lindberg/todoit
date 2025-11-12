@@ -63,7 +63,7 @@ end
 
         todos.each do |todo|
             db.execute("INSERT INTO todos (todo_title, todo_description, is_completed, category_id) VALUES (?,?,?,?)", 
-                todo[:todo_title], todo[:todo_description], todo[:is_completed], todo[:category_id])
+                [todo[:todo_title], todo[:todo_description], todo[:is_completed], todo[:category_id]])
         end
     end
 

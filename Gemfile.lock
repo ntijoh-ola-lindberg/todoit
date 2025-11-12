@@ -2,8 +2,8 @@ GEM
   remote: https://rubygems.org/
   specs:
     base64 (0.2.0)
-    ffi (1.17.0)
-    ffi (1.17.0-arm64-darwin)
+    ffi (1.17.2)
+    ffi (1.17.2-arm64-darwin)
     listen (3.9.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -38,9 +38,9 @@ GEM
       rack-protection (= 4.0.0)
       sinatra (= 4.0.0)
       tilt (~> 2.0)
-    sqlite3 (2.0.4)
+    sqlite3 (2.8.0)
       mini_portile2 (~> 2.8.0)
-    sqlite3 (2.0.4-arm64-darwin)
+    sqlite3 (2.8.0-arm64-darwin)
     tilt (2.4.0)
     webrick (1.8.1)
 
