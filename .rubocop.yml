@@ -1,0 +1,18 @@
+# Use EditorConfig for basic indentation rules
+inherit_from: .editorconfig
+
+AllCops:
+  SuggestExtensions: false
+  NewCops: enable
+  Exclude:
+    - 'bin/**/*'
+    - 'db/schema.rb'
+
+
+  # Disable the entire Documentation department
+Style/Documentation:
+  Enabled: false
+
+# Disable the "Missing frozen string literal" comment at the top
+Style/FrozenStringLiteralComment:
+  Enabled: false
