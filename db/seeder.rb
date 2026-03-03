@@ -1,17 +1,32 @@
+require 'sqlite3'
+require_relative '../config'
+
 class Seeder
 
     def self.seed!
-       drop_tables 
-       create_tables
-       populate_todos
-       self.populate_categories
+
+        @db = nil
+
+        puts "Using db file: #{DB_PATH}"
+        puts "🧹 Dropping old tables..."
+        drop_tables
+        puts "🧱 Creating tables..."
+        create_tables
+        puts "🍎 Populating tables..."
+        populate_todos
+        self.populate_categories
+        puts "✅ Done seeding the database!"
     end
 
-private 
+  private
 
-    def self.db 
-        @db ||= SQLite3::Database.new("db/app.sqlite")
+  def self.db
+    @db ||= begin
+      db = SQLite3::Database.new(DB_PATH)
+      db.results_as_hash = true
+      db
     end
+  end
 
     def self.drop_tables
         db.execute("DROP TABLE IF EXISTS todos")

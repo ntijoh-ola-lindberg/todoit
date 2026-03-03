@@ -1,12 +1,15 @@
-class App < Sinatra::Base 
+class App < Sinatra::Base
+    setup_development_features(self)
 
+    # Funktion för att prata med databasen
+    # Exempel på användning: db.execute('SELECT * FROM products')
     def db
-        return @db if @db
+      return @db if @db
 
-        @db = SQLite3::Database.new("db/app.sqlite")
-        @db.results_as_hash = true
+      @db = SQLite3::Database.new(DB_PATH)
+      @db.results_as_hash = true
 
-        return @db
+      return @db
     end
 
     def get_all_categories
