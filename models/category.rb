@@ -29,6 +29,7 @@ class Category < BaseModel
   end
 
   def self.destroy(id)
+    #TODO: What happens with todos that have this category?
     db.execute('DELETE FROM categories WHERE id =?', id)
   end
 

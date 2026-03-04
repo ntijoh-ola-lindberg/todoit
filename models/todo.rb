@@ -55,6 +55,4 @@ class Todo < BaseModel
     db.execute(sql, id)
   end
 
-  #sql = 'UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?'
-
 end
