@@ -1,8 +1,9 @@
+require 'awesome_print'
+require_relative 'models/todo'
+
 class App < Sinatra::Base
   setup_development_features(self)
 
-  # Funktion för att prata med databasen
-  # Exempel på användning: db.execute('SELECT * FROM products')
   def db
     return @db if @db
 
@@ -18,12 +19,11 @@ class App < Sinatra::Base
   end
 
   get '/' do
-    sql_todos = 'SELECT todos.*, categories.category_title
-            FROM todos
-	            INNER JOIN categories
-		            ON category_id = categories.id'
+    redirect('/todos')
+  end
 
-    @todos = db.execute(sql_todos)
+  get '/todos' do
+    @todos = Todo.all
 
     @categories = get_all_categories
 
