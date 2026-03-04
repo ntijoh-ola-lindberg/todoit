@@ -28,7 +28,6 @@ class Todo < BaseModel
             WHERE todos.id = ?'
 
     todo = db.execute(sql_todos, id).first
-    ap "Todo.find(id): #{todo}"
     return todo
   end
 
@@ -41,5 +40,14 @@ class Todo < BaseModel
     db.execute('DELETE FROM todos WHERE id =?', id)
   end
 
+  def self.all_by_category_id(category_id)
+    sql_todos = 'SELECT todos.*, categories.category_title
+                  FROM todos
+	                  INNER JOIN categories
+		                  ON todos.category_id = categories.id
+                  WHERE todos.category_id=?'
+    todos = db.execute(sql_todos, category_id)
+    return todos
+  end
 
 end

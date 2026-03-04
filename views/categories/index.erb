@@ -4,10 +4,13 @@
                 <ul class="categories">
                 <% @categories.each do | c | %>
                         <li>
-                                <a href="/categories/<%=c['id']%>"><%=c['category_title']%></a>
-                                <form action="/categories/<%= c['id']%>/delete" method="post">
-                                        <input type="submit" value="Ta bort">
-                                </form>
+                          <%=c['category_title']%>
+
+                          <form action="/categories/<%= c['id']%>/delete" method="post">
+                            <input type="submit" value="Ta bort">
+                          </form>
+
+                          <a href="/categories/<%=c['id']%>/edit" class="button">Ändra</a>
                         </li>
                 <% end %>
                 </ul>

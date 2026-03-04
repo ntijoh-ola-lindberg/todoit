@@ -74,26 +74,14 @@ class App < Sinatra::Base
   end
 
   get '/categories' do
-    sql_categories = 'SELECT * FROM categories'
-    @categories = db.execute(sql_categories)
-
+    @categories = Category.all
     erb :'categories/index'
   end
 
-  get '/categories/:id' do |id|
-    sql_categories = 'SELECT * FROM categories WHERE id =?'
-    @category = db.execute(sql_categories, id)
-
-    sql_todos = 'SELECT todos.*, categories.category_title
-            FROM todos
-	            INNER JOIN categories
-		            ON category_id = categories.id
-            WHERE category_id=?'
-
-    @todos = db.execute(sql_todos, id)
-
-    sql_categories = 'SELECT * FROM categories'
-    @categories = db.execute(sql_categories)
+  get '/categories/:id/edit' do |id|
+    @category = Category.find(id)
+    @todos = Todo.all_by_category_id(id)
+    @categories = Category.all
 
     erb :'categories/edit'
   end
