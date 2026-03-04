@@ -1,5 +1,7 @@
 require 'awesome_print'
+require_relative 'models/base_model'
 require_relative 'models/todo'
+require_relative 'models/category'
 
 class App < Sinatra::Base
   setup_development_features(self)
@@ -13,37 +15,30 @@ class App < Sinatra::Base
     @db
   end
 
-  def get_all_categories
-    sql_categories = 'SELECT * FROM categories'
-    db.execute(sql_categories)
-  end
-
   get '/' do
     redirect('/todos')
   end
 
   get '/todos' do
     @todos = Todo.all
-
-    ap @todos
-
-    @categories = get_all_categories
-
+    @categories = Category.all
     erb :'todos/index'
   end
 
   # post '/todos/
   # CREATE
-  post '/todos/new-todo' do
-    title = params['todo_title']
-    description = params['todo_description']
-    is_completed = 0
-    category = params['category']
+  post '/todos' do
 
-    status = db.execute(
-      'INSERT INTO todos (todo_title, todo_description, is_completed, category_id) VALUES (?,?,?,?)', [title, description,
-                                                                                                       is_completed, category]
-    )
+    ap "Getting params from create todos form: #{params}"
+
+    todo_data = {
+      title: params['todo_title'],
+      description:  params['todo_description'],
+      is_completed: 0,
+      category_id: params['category']
+    }
+
+    Todo.create(**todo_data)
 
     redirect '/'
   end
@@ -68,7 +63,7 @@ class App < Sinatra::Base
 
     @todo = db.execute(sql_todos, id)[0]
 
-    @categories = get_all_categories
+    @categories = Category.all
 
     erb :'todos/update'
   end

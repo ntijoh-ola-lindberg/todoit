@@ -1,14 +1,6 @@
-class Todo
+require_relative 'base_model'
 
-  def self.db
-    return @db if @db
-
-    @db = SQLite3::Database.new(DB_PATH)
-    @db.results_as_hash = true
-
-    @db
-  end
-
+class Todo < BaseModel
 
   def self.all()
     sql_todos = 'SELECT todos.*, categories.category_title
@@ -18,6 +10,15 @@ class Todo
 
     todos = db.execute(sql_todos)
     return todos
+  end
+
+  def self.create(title:, description:, is_completed:, category_id:)
+
+    db.execute(
+      'INSERT INTO todos (todo_title, todo_description,
+                          is_completed, category_id)
+                            VALUES (?,?,?,?)', [title, description, is_completed, category_id]
+    )
   end
 
 
