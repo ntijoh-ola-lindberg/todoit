@@ -50,4 +50,11 @@ class Todo < BaseModel
     return todos
   end
 
+  def self.toggle_completion(id)
+    sql = 'UPDATE todos SET is_completed = 1 - is_completed WHERE id = ?'
+    db.execute(sql, id)
+  end
+
+  #sql = 'UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?'
+
 end

@@ -30,22 +30,15 @@ class App < Sinatra::Base
     Todo.create(params['todo_title'],
                 params['todo_description'],
                 is_completed,
-                params['category'])
+                params['category_id'])
 
     redirect '/'
   end
 
-  # ToDo
   post '/todos/:id/toggle-completion' do |id|
-    status = db.execute('UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?', id)
-
+    Todo.toggle_completion(id)
     redirect '/'
   end
-
-  # ToDo
-  # Show : Restful route
-  # get '/todos/:id'
-  # end
 
   get '/todos/:id/edit' do |id|
     @todo = Todo.find(id)
@@ -54,7 +47,6 @@ class App < Sinatra::Base
     erb :'todos/edit'
   end
 
-  # Update : Restful route. Saves the form for the given ID.
   post '/todos/:id/update' do |id|
 
     # Checkbox is_completed is only passed from html form if it is checked
