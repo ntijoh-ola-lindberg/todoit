@@ -37,5 +37,9 @@ class Todo < BaseModel
     db.execute(sql_save_todo, [title, description, is_completed, category_id, id])
   end
 
+  def self.destroy(id)
+    db.execute('DELETE FROM todos WHERE id =?', id)
+  end
+
 
 end

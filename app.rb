@@ -69,8 +69,7 @@ class App < Sinatra::Base
   end
 
   post '/todos/:id/delete' do |id|
-    status = db.execute('DELETE FROM todos WHERE id =?', id)
-
+    Todo.destroy(id)
     redirect '/'
   end
 
