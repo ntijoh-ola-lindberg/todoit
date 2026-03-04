@@ -25,67 +25,46 @@ class App < Sinatra::Base
     erb :'todos/index'
   end
 
-  # post '/todos/
-  # CREATE
   post '/todos' do
-
-    ap "Getting params from create todos form: #{params}"
-
-    todo_data = {
-      title: params['todo_title'],
-      description:  params['todo_description'],
-      is_completed: 0,
-      category_id: params['category']
-    }
-
-    Todo.create(**todo_data)
+    is_completed = 0 #New ToDos cannot be completed
+    Todo.create(params['todo_title'],
+                params['todo_description'],
+                is_completed,
+                params['category'])
 
     redirect '/'
   end
 
+  # ToDo
   post '/todos/:id/toggle-completion' do |id|
     status = db.execute('UPDATE todos SET is_completed = ((is_completed | 1) - (is_completed & 1)) WHERE id =?', id)
 
     redirect '/'
   end
 
+  # ToDo
   # Show : Restful route
   # get '/todos/:id'
   # end
 
-  # Edit : Restful route. Fetches and populates the form that is saved with Update (below).
   get '/todos/:id/edit' do |id|
-    sql_todos = 'SELECT todos.*, categories.category_title
-            FROM todos
-	            INNER JOIN categories
-		            ON category_id = categories.id
-            WHERE todos.id = ?'
-
-    @todo = db.execute(sql_todos, id)[0]
-
+    @todo = Todo.find(id)
     @categories = Category.all
 
-    erb :'todos/update'
+    erb :'todos/edit'
   end
 
   # Update : Restful route. Saves the form for the given ID.
   post '/todos/:id/update' do |id|
-    todo_id = params['todo_id']
-    todo_title = params['todo_title']
-    todo_description = params['todo_description']
-    is_completed = if params.has_key?('is_completed')
-                     1
-                   else
-                     0
-                   end
-    category_title = params['category']
 
-    sql_category_id = 'SELECT * FROM categories WHERE category_title LIKE ?'
-    category_id = db.execute(sql_category_id, category_title).first['id']
+    # Checkbox is_completed is only passed from html form if it is checked
+    if params.has_key?('is_completed')
+      is_completed = 1
+    else
+      is_completed = 0
+    end
 
-    sql_save_todo = 'UPDATE todos SET todo_title =?, todo_description =?, is_completed=?, category_id=? WHERE id=?'
-    status = db.execute(sql_save_todo, [todo_title, todo_description, is_completed, category_id, todo_id])
-
+    Todo.update(id, params['todo_title'], params['todo_description'], is_completed, params['category_id'])
     redirect '/'
   end
 

@@ -8,4 +8,9 @@ class Category < BaseModel
     return categories
   end
 
+  def self.find_by_title(title)
+    category = db.execute('SELECT * FROM categories WHERE category_title LIKE ?', title).first
+    return category
+  end
+
 end

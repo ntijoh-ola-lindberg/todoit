@@ -3,7 +3,6 @@
     <form action="/todos/<%= @todo['id'] %>/update" method="post">
         <article class="update_todo">
 
-            <input type="hidden" name="todo_id" value="<%= @todo['id'] %>">
             <label>Titel <input type="text" name="todo_title" value="<%= @todo['todo_title'] %>"></label>
             <label>Beskrivning <input type="text" name="todo_description" value="<%= @todo['todo_description'] %>"></label>
 
@@ -15,12 +14,14 @@
                 <% end %>
             </label>
 
-            <label>Kategori
-                <select name="category" id="categories-select">
-                <% @categories.each do | c | %>
-                    <option value="<%=c['category_title']%>" category_id="-1" <% if c['id'] == @todo['category_id'] %> selected <% end %> name="" > <%=c['category_title']%></option>
+            <label>Kategori:
+              <select name="category_id" id="categories-select">
+                <% @categories.each do |c| %>
+                  <option value="<%= c['id'] %>" <%= 'selected' if c['id'] == @todo['category_id'] %>>
+                    <%= c['category_title'] %>
+                  </option>
                 <% end %>
-                </select>
+              </select>
             </label>
 
             <input type="submit" value="Uppdatera">
