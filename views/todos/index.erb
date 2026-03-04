@@ -1,6 +1,5 @@
 
-
-<%= erb :'todos/_todos' %>
+<%= erb :'todos/_list', locals: { todos: @todos } %>
 
 <section class="new-todo">
     <h1>Ny <span class="logo">todo!</span></h1>
