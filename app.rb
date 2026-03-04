@@ -92,11 +92,11 @@ class App < Sinatra::Base
   end
 
   post '/categories/:id/delete' do |id|
-    status = db.execute('DELETE FROM categories WHERE id =?', id)
+    Category.destroy(id)
     redirect '/categories'
   end
 
-  post '/categories/new' do
+  post '/categories' do
     ct = params['category_title']
     sql = 'INSERT INTO categories (category_title) VALUES (?)'
     status = db.execute(sql, ct)

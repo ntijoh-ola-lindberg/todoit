@@ -24,4 +24,8 @@ class Category < BaseModel
     db.execute(sql, [category_title, id])
   end
 
+  def self.destroy(id)
+    db.execute('DELETE FROM categories WHERE id =?', id)
+  end
+
 end
