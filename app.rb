@@ -25,6 +25,8 @@ class App < Sinatra::Base
   get '/todos' do
     @todos = Todo.all
 
+    ap @todos
+
     @categories = get_all_categories
 
     erb :'todos/index'

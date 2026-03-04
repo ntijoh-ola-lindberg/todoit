@@ -1,14 +1,14 @@
-<%= erb :'layouts/_header' %>
+
 
 <%= erb :'todos/_todos' %>
 
 <section class="new-todo">
     <h1>Ny <span class="logo">todo!</span></h1>
-    <article class="todos new-todo"> 
+    <article class="todos new-todo">
     <form action="/todos/new-todo" method="post">
         <label>Titel <input type="text" name="todo_title" /></label>
         <label>Beskrivning <input type="text" name="todo_description"></label>
-        <label>Kategori:  
+        <label>Kategori:
             <select name="category">
             <% @categories.each do | c | %>
             <option value="<%=c['id']%>"> <%=c['category_title']%></option>
@@ -21,4 +21,3 @@
     </article>
 </section>
 
-<%= erb :'layouts/_footer' %>
