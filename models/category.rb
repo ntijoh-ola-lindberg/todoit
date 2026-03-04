@@ -8,6 +8,10 @@ class Category < BaseModel
     return categories
   end
 
+  def self.create(title)
+    db.execute('INSERT INTO categories (category_title) VALUES (?)', title)
+  end
+
   def self.find(id)
     sql_categories = 'SELECT * FROM categories WHERE id =?'
     category = db.execute(sql_categories, id).first

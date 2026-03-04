@@ -97,9 +97,7 @@ class App < Sinatra::Base
   end
 
   post '/categories' do
-    ct = params['category_title']
-    sql = 'INSERT INTO categories (category_title) VALUES (?)'
-    status = db.execute(sql, ct)
+    Category.create(params['category_title'])
     redirect '/categories'
   end
 end
