@@ -19,4 +19,9 @@ class Category < BaseModel
     return category
   end
 
+  def self.update(id, category_title)
+    sql = 'UPDATE categories SET category_title =? WHERE id =?'
+    db.execute(sql, [category_title, id])
+  end
+
 end

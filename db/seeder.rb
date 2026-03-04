@@ -44,7 +44,7 @@ class Seeder
 
     db.execute('CREATE TABLE "categories" (
 	                    "id" INTEGER NOT NULL UNIQUE,
-                        "category_title" TEXT,
+                      "category_title" TEXT,
 	                    PRIMARY KEY("id" AUTOINCREMENT)
                     );')
   end

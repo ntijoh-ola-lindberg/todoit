@@ -87,9 +87,7 @@ class App < Sinatra::Base
   end
 
   post '/categories/:id/update' do |id|
-    ct = params['category_title']
-    sql = 'UPDATE categories SET category_title =? WHERE id =?'
-    status = db.execute(sql, [ct, id])
+    Category.update(id, params['category_title'])
     redirect '/'
   end
 
