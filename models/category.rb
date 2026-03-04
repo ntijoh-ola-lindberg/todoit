@@ -29,7 +29,8 @@ class Category < BaseModel
   end
 
   def self.destroy(id)
-    #TODO: What happens with todos that have this category?
+    # Set all todos to default category before delete
+    db.execute('UPDATE todos SET category_id = 1 WHERE category_id = ?', id)
     db.execute('DELETE FROM categories WHERE id =?', id)
   end
 
